@@ -1,8 +1,19 @@
 version = 1
 revision = 3
-requires-python = ">=3.13"
+requires-python = "==3.13.*"
+
+[manifest]
+members = [
+    "bazel-execution-breakdown",
+    "bazel-execution-breakdown-backend",
+]
 
 [[package]]
 name = "bazel-execution-breakdown"
 version = "0.0.1"
 source = { virtual = "." }
+
+[[package]]
+name = "bazel-execution-breakdown-backend"
+version = "0.0.1"
+source = { virtual = "backend/py" }
