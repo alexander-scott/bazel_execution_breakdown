@@ -1,19 +1,17 @@
 import datetime
-import json
 import logging
 import time
 from collections import defaultdict
 
-from src.action import Action, ExecutionAction, RepositoryLoadingAction
-from src.action_filter import ActionType
+from src.action import Action, ActionType
 from src.profile_event_classifier import (
     PROFILE_CRITICAL_PATH_REGEX,
     PROFILE_DUR_REGEX,
     PROFILE_GC_REGEX,
     PROFILE_MAIN_THREAD_REGEX,
     PROFILE_RESOURCES_REGEX,
+    PROFILE_TREE_DELETER,
     PROFILE_TS_REGEX,
-    ProfileEventTypeClassifier,
 )
 
 _logger = logging.getLogger()
@@ -45,6 +43,7 @@ class Thread:
                 or PROFILE_CRITICAL_PATH_REGEX(event)
                 or PROFILE_RESOURCES_REGEX(event)
                 or PROFILE_GC_REGEX(event)
+                or PROFILE_TREE_DELETER(event)
             ):
                 _logger.debug(f"Skipping thread because it's a metadata thread: {event}")
                 return []
@@ -74,64 +73,28 @@ class Thread:
         self, event_groups: list[list[str]]
     ) -> dict[ActionType, list[Action]]:
         action_map: dict[ActionType, list[Action]] = defaultdict(list)
-        untracked_event_groups: dict[tuple[str, str], int] = defaultdict(int)
+        unknown_actions: set[tuple[str, str]] = set()
 
         _logger.debug("Generating actions from event groups...")
         start_time = time.time()
 
-        for index, event_group in enumerate(event_groups):
-            primary_event: dict[str, str] = json.loads(event_group[0])
-
-            ### Core event types that we are interested in ###
-            if ProfileEventTypeClassifier.is_action_processing_event(primary_event):
-                action_map[ActionType.EXECUTION].append(
-                    ExecutionAction(primary_event, index, event_groups, self.build_start_time)
-                )
-            elif ProfileEventTypeClassifier.is_starlark_repository_function_call_event(
-                primary_event
-            ):
-                action_map[ActionType.REPOSITORY_LOADING].append(
-                    RepositoryLoadingAction(
-                        primary_event, index, event_groups, self.build_start_time
-                    )
-                )
-
-            ### Event types that we are explicitly not interested in ##
-            elif (
-                # These events are mostly file read operations and are so negligible (under 1ms)
-                # that it's definitely not worth tracking them.
-                ProfileEventTypeClassifier.is_package_creation_event(primary_event)
-                or ProfileEventTypeClassifier.is_check_outputs_event(primary_event)
-                or ProfileEventTypeClassifier.is_discover_inputs_event(primary_event)
-                ###
-                # These events are always associated with an action processing event
-                # and are already being tracked in the `_process_execution_event_group` function.
-                or ProfileEventTypeClassifier.is_action_dependency_checking_event(primary_event)
-                or ProfileEventTypeClassifier.is_action_post_processing_run_event(primary_event)
-                ###
-                # A fetching repository event by itself is essentially an event that checks that
-                # the bazel external repository is up to date. If the repository is up to date, e.g.
-                # it's in the cache, then this event is negligible. If the repository is not up to date,
-                # then the event is associated with a starlark repository function call event and
-                # is already being tracked in the `_process_repository_loading_event_group` function.
-                or ProfileEventTypeClassifier.is_fetching_repository_event(primary_event)
-            ):
-                continue
-
-            ### Event types that we do not have any tracking logic for ###
-            else:
-                untracked_event_groups[(primary_event["cat"], primary_event["name"])] += 1
+        for index, _ in enumerate(event_groups):
+            action = Action(index, event_groups, self.build_start_time)
+            if action.action_type in [ActionType.EXECUTION, ActionType.REPOSITORY_LOADING]:
+                action_map[action.action_type].append(action)
+            elif action.action_type == ActionType.UNKNOWN:
+                unknown_actions.add((action.metrics["cat"], action.metrics["name"]))
 
         end_time = time.time()
         _logger.debug(
             f"Built {len(action_map[ActionType.EXECUTION]) + len(action_map[ActionType.REPOSITORY_LOADING])} actions from {len(event_groups)} event groups in {end_time - start_time:.4f} seconds"
         )
 
-        if len(untracked_event_groups) > 0:
+        if len(unknown_actions) > 0:
             _logger.warning(
-                f"[tid_{self.thread_id}] Skipped {len(untracked_event_groups)} event groups due to missing tracking:"
+                f"[tid_{self.thread_id}] Skipped {len(unknown_actions)} event groups due to missing tracking:"
             )
-            for group, count in untracked_event_groups.items():
-                _logger.warning(f"  {group[0]}: {group[1]}: {count} events")
+            for action_name in unknown_actions:
+                _logger.warning(f"  {action_name}")
 
         return action_map

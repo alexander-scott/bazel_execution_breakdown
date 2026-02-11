@@ -6,6 +6,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from src.action import Action
+from src.action_filter import ACTION_FILTER_CRITERIA, ActionFilterType
 from src.profile_event_classifier import PROFILE_TID_REGEX
 from src.profile_loader import read_profile_lines
 from src.thread import Thread
@@ -27,11 +28,26 @@ class Profile:
         A list of threads found within the profile. Each thread contains a list of actions.
         """
 
-    def get_actions(self) -> list[Action]:
+    def get_actions(self, filter_type: ActionFilterType) -> list[Action]:
+        _logger.debug(f"Applying filter to the actions: {filter_type}...")
+
         actions: list[Action] = []
         for thread in self.threads:
             for thread_actions in thread.actions.values():
-                actions.extend(thread_actions)
+                if not ACTION_FILTER_CRITERIA[filter_type]:
+                    actions.extend(thread_actions)
+                else:
+                    actions.extend(
+                        [
+                            action
+                            for action in thread_actions
+                            if any(
+                                required_field in action.metrics
+                                for required_field in ACTION_FILTER_CRITERIA[filter_type]
+                            )
+                        ]
+                    )
+
         return actions
 
     def _extract_profile_metadata(self, profile_data: list[str]) -> tuple[str, datetime.datetime]:
