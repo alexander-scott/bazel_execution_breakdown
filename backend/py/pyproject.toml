@@ -3,4 +3,6 @@ name = "bazel-execution-breakdown-backend"
 version = "0.0.1"
 description = "Breakdown bazel executions"
 readme = "README.md"
-dependencies = []
+dependencies = [
+    "typer==0.21.1",
+]

@@ -13,6 +13,12 @@ If you have tens of thousands of Bazel builds per day, would you want to know:
 
 Then this tool can help you out. It consists of two components: the frontend and the backend/database. The backend will analyse your bazel profile and build event protocols and store it in a database, and the frontend will render that data for you with various filter/breakdown options.
 
+## Generating a bazel profile
+
+```bash
+$ bazel build --profile=profile.gz --noslim_profile --experimental_profile_include_target_label --experimental_profile_include_primary_output //...
+```
+
 ## Getting started
 
 ### Pre-requisites
