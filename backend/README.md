@@ -5,5 +5,5 @@
 The python version of the backend can be run with
 
 ```bash
-$ uv run main.py
+$ uv run py/main.py
 ```

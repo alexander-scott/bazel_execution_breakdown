@@ -17,6 +17,8 @@ _logger = logging.getLogger()
 class Profile:
     def __init__(self, file: Path) -> None:
         _events: list[str] = read_profile_lines(file)
+        if not _events:
+            raise Exception(f"Profile file {file} contained no readable events")
 
         self.build_id, self.build_start_time = self._extract_profile_metadata(_events)
         """
