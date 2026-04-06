@@ -28,6 +28,14 @@ def make_raw_event(cat: str, name: str, ts: int, dur: int, tid: int, **kwargs: o
     Uses compact JSON separators so that the field regexes (e.g. ``ts\":(\\d+)``) used by the
     profile parser match without any intervening whitespace.
     """
-    event: dict[str, object] = {"cat": cat, "name": name, "ph": "X", "ts": ts, "dur": dur, "pid": 1, "tid": tid}
+    event: dict[str, object] = {
+        "cat": cat,
+        "name": name,
+        "ph": "X",
+        "ts": ts,
+        "dur": dur,
+        "pid": 1,
+        "tid": tid,
+    }
     event.update(kwargs)
     return f"    {json.dumps(event, separators=(',', ':'))},\n"
