@@ -1,2 +1,4 @@
+common --announce_rc
+
 test --test_output=errors
 test --verbose_failures
