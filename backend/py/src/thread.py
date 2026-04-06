@@ -63,6 +63,7 @@ class Thread:
                 current_event_group = []
 
             current_event_group.append(event.replace(",\n", "").strip())
+            current_group_end_time = max(current_group_end_time, event_end_time)
 
         if current_event_group:
             event_groups.append(current_event_group)
@@ -73,7 +74,7 @@ class Thread:
         self, event_groups: list[list[str]]
     ) -> dict[ActionType, list[Action]]:
         action_map: dict[ActionType, list[Action]] = defaultdict(list)
-        unknown_actions: set[tuple[str, str]] = set()
+        unknown_actions: set[tuple[str | int, str | int]] = set()
 
         _logger.debug("Generating actions from event groups...")
         start_time = time.time()

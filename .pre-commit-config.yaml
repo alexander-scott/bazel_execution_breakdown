@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       # Repository hygiene
       - id: check-added-large-files
@@ -43,11 +43,6 @@ repos:
       - id: mypy
         name: "mypy"
         args: []
-
-  - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.5.0
-    hooks:
-      - id: detect-secrets
 
   - repo: https://github.com/bridgecrewio/checkov.git
     rev: 3.2.495

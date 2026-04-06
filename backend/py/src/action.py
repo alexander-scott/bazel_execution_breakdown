@@ -1,11 +1,8 @@
 import datetime
 import json
-import logging
 from enum import Enum
 
 from src.profile_event_classifier import PEClassifier
-
-_logger = logging.getLogger()
 
 
 class ActionType(str, Enum):
@@ -22,7 +19,7 @@ class Action:
         event_groups: list[list[str]],
         build_start_time: datetime.datetime,
     ) -> None:
-        self.metrics: dict[str, str] = {}
+        self.metrics: dict[str, str | int] = {}
         self.build_start_time = build_start_time
 
         self._build_action(current_index, event_groups)
@@ -93,21 +90,21 @@ class Action:
             prev_primary_event: dict[str, str] = json.loads(event_groups[current_index - 1][0])
             if PEClassifier.is_action_dependency_checking_event(prev_primary_event):
                 prev_primary_event_name = PEClassifier.get_event_name(prev_primary_event)
-                return_dict[f"duration.{prev_primary_event_name}"] = prev_primary_event["dur"]
+                return_dict[f"duration.{prev_primary_event_name}"] = str(prev_primary_event["dur"])
                 total_duration += int(prev_primary_event["dur"])
 
         # Skip the first in the list as that's the primary_event
         for child_event in event_groups[current_index][1:]:
             child_event_dict: dict[str, str] = json.loads(child_event)
             child_event_name = PEClassifier.get_event_name(child_event_dict)
-            return_dict[f"duration.{child_event_name}"] = child_event_dict["dur"]
+            return_dict[f"duration.{child_event_name}"] = str(child_event_dict["dur"])
 
         # Check if the next event group on this thread is related to this one
         if current_index + 1 < len(event_groups):
             next_primary_event: dict[str, str] = json.loads(event_groups[current_index + 1][0])
             if PEClassifier.is_action_post_processing_run_event(next_primary_event):
                 next_primary_event_name = PEClassifier.get_event_name(next_primary_event)
-                return_dict[f"duration.{next_primary_event_name}"] = next_primary_event["dur"]
+                return_dict[f"duration.{next_primary_event_name}"] = str(next_primary_event["dur"])
                 total_duration += int(next_primary_event["dur"])
 
         return_dict["duration.total"] = str(total_duration)
@@ -123,7 +120,7 @@ class Action:
         return_dict: dict[str, str] = {}
 
         return_dict["target"] = primary_event["name"].replace("//external:", "@@")
-        return_dict["duration.total"] = primary_event["dur"]
+        return_dict["duration.total"] = str(primary_event["dur"])
 
         # Skip the first in the list as that's the primary_event
         for child_event in event_groups[current_index][1:]:
@@ -135,6 +132,6 @@ class Action:
             # --kill_delay=15 git -c core.fsmonitor=false reset --hard f49d1e11d6bb7d7a9592573e75afbf562e2f5cb9","ph":"X","ts":14967562,"dur":175559,"pid":1,"tid":1000003}']
             if PEClassifier.is_starlark_built_in_function_call_event(child_event_dict):
                 child_event_name = PEClassifier.get_event_name(child_event_dict)
-                return_dict[f"duration.{child_event_name}"] = child_event_dict["dur"]
+                return_dict[f"duration.{child_event_name}"] = str(child_event_dict["dur"])
 
         return return_dict

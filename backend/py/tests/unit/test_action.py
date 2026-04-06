@@ -236,7 +236,7 @@ class TestRepoLoadingActionMetrics:
         # unlike execution actions which explicitly call str() on the total.
         event_groups = [[make_repo_loading_event(dur=3_000_000)]]
         action = Action(0, event_groups, BUILD_START_TIME)
-        assert action.metrics["duration.total"] == 3_000_000  # noqa: PLR2004
+        assert action.metrics["duration.total"] == "3000000"
 
     def test_given_starlark_repo_event_with_builtin_child_when_action_built_expect_child_duration_in_metrics(
         self,
