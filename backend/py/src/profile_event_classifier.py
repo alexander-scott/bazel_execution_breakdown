@@ -5,8 +5,8 @@ PROFILE_TS_REGEX = re.compile(r"ts\":(\d+)").search
 PROFILE_DUR_REGEX = re.compile(r"dur\":(\d+)").search
 PROFILE_TID_REGEX = re.compile(r"tid\":(\d+)").search
 
-PROFILE_MAIN_THREAD_REGEX = re.compile(r"\"name\":\"Critical Path\"").search
-PROFILE_CRITICAL_PATH_REGEX = re.compile(r"\"name\":\"Main Thread\"").search
+PROFILE_CRITICAL_PATH_REGEX = re.compile(r"\"name\":\"Critical Path\"").search
+PROFILE_MAIN_THREAD_REGEX = re.compile(r"\"name\":\"Main Thread\"").search
 PROFILE_RESOURCES_REGEX = re.compile(r"\"name\":\"collect-local-resources\"").search
 PROFILE_GC_REGEX = re.compile(r"\"name\":\"Garbage Collector\"").search
 PROFILE_TREE_DELETER = re.compile(r"\"name\":\"tree-deleter\"").search

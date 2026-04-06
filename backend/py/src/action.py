@@ -39,12 +39,12 @@ class Action:
         ### Core event types that we are interested in ###
         if PEClassifier.is_action_processing_event(primary_event):
             self.action_type = ActionType.EXECUTION
-            self._build_execution_action(primary_event, index, event_groups)
+            self.metrics.update(self._build_execution_action(primary_event, index, event_groups))
         elif PEClassifier.is_starlark_repository_function_call_event(
             primary_event
         ) or PEClassifier.is_bazel_module_processing_event(primary_event):
             self.action_type = ActionType.REPOSITORY_LOADING
-            self._build_repo_loading_action(primary_event, index, event_groups)
+            self.metrics.update(self._build_repo_loading_action(primary_event, index, event_groups))
 
         ### Event types that we are explicitly not interested in ##
         elif (
@@ -86,7 +86,7 @@ class Action:
         # Requires `--experimental_profile_include_primary_output`
         if "out" in primary_event:
             return_dict["out"] = primary_event["out"]
-        return_dict["mnemonic"] = primary_event.get("args").get("mnemonic")  # type: ignore
+        return_dict["mnemonic"] = primary_event.get("args", {}).get("mnemonic", "")  # type: ignore
 
         # Check if the prev event group on this thread is related to this one
         if current_index - 1 >= 0:

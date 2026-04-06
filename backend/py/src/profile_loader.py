@@ -36,11 +36,11 @@ def read_profile_lines(path_to_profile: Path) -> list[str]:
             try:
                 with open(path_to_profile, encoding="utf-8") as file:
                     data = file.readlines()
-            except UnicodeDecodeError:
-                return []
-    except Exception as ex:
+            except UnicodeDecodeError as ex:
+                raise ValueError(f"Profile file is not valid utf-8 {path_to_profile}") from ex
+    except Exception:
         _logger.exception("Exception caught when trying to open profile %s", path_to_profile)
-        raise ex
+        raise
 
     end_time = time.time()
     _logger.debug(f"Time taken to read profile: {end_time - start_time:.4f} seconds")
