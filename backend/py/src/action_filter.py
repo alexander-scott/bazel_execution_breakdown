@@ -1,7 +1,4 @@
-import logging
 from enum import Enum
-
-_logger = logging.getLogger()
 
 
 class ActionFilterType(str, Enum):
