@@ -1,0 +1,7 @@
+load("@rules_python//python:py_library.bzl", "py_library")
+
+py_library(
+    name = "conftest",
+    srcs = ["conftest.py"],
+    visibility = ["//backend/py/tests:__subpackages__"],
+)

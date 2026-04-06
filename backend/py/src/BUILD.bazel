@@ -1,0 +1,33 @@
+load("@rules_python//python:py_library.bzl", "py_library")
+
+package(default_visibility = ["//backend/py:__subpackages__"])
+
+py_library(
+    name = "action_filter",
+    srcs = ["action_filter.py"],
+)
+
+py_library(
+    name = "action",
+    srcs = ["action.py"],
+)
+
+py_library(
+    name = "profile_event_classifier",
+    srcs = ["profile_event_classifier.py"],
+)
+
+py_library(
+    name = "profile_loader",
+    srcs = ["profile_loader.py"],
+)
+
+py_library(
+    name = "profile",
+    srcs = ["profile.py"],
+)
+
+py_library(
+    name = "thread",
+    srcs = ["thread.py"],
+)
