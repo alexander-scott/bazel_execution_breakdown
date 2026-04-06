@@ -3,7 +3,7 @@ name = "bazel-execution-breakdown"
 version = "0.0.1"
 description = "Add your description here"
 readme = "README.md"
-requires-python = "==3.13.*"
+requires-python = "==3.14.3"
 dependencies = ["typer==0.24.1"]
 
 [dependency-groups]
@@ -17,8 +17,8 @@ testpaths = ["backend/py/tests"]
 line-length = 100
 indent-width = 4
 
-# Assume Python 3.13
-target-version = "py313"
+# Assume Python 3.14
+target-version = "py314"
 
 [tool.ruff.lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`) codes by default.
