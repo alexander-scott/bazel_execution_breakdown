@@ -60,7 +60,7 @@ repos:
     rev: 8.2.1
     hooks:
       - id: buildifier
-        args: &args # Keep this argument in sync with .bazelci/presubmit.yaml
+        args: &args
           - --warnings=all
       - id: buildifier-lint
         args: *args
