@@ -1,0 +1,31 @@
+load("@rules_python//python:py_test.bzl", "py_test")
+
+py_test(
+    name = "test_action",
+    srcs = ["test_action.py"],
+    deps = [
+        "//backend/py:main",
+        "//backend/py/tests:conftest",
+        "@pip//pytest",
+    ],
+)
+
+py_test(
+    name = "test_profile_loader",
+    srcs = ["test_profile_loader.py"],
+    deps = [
+        "//backend/py:main",
+        "//backend/py/tests:conftest",
+        "@pip//pytest",
+    ],
+)
+
+py_test(
+    name = "test_thread",
+    srcs = ["test_thread.py"],
+    deps = [
+        "//backend/py:main",
+        "//backend/py/tests:conftest",
+        "@pip//pytest",
+    ],
+)

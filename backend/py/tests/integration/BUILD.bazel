@@ -1,0 +1,11 @@
+load("@rules_python//python:py_test.bzl", "py_test")
+
+py_test(
+    name = "test_profile",
+    srcs = ["test_profile.py"],
+    deps = [
+        "//backend/py:main",
+        "//backend/py/tests:conftest",
+        "@pip//pytest",
+    ],
+)
