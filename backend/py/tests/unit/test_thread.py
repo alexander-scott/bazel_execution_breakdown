@@ -50,6 +50,18 @@ class TestGetEventGroups:
         ]
         assert thread._get_event_groups(events) == []  # pyright: ignore[reportPrivateUsage]
 
+    def test_given_metadata_marker_not_first_after_sorting_when_groups_built_expect_empty_list(
+        self,
+    ) -> None:
+        # Events without 'ts' sort first (timestamp=0), pushing the metadata marker to a later
+        # position. The old index==0 check would miss this; the new scan catches it.
+        thread = Thread.__new__(Thread)
+        events = [
+            '    {"cat":"general information","name":"NoTimestamp","dur":1000,"pid":1,"tid":0},\n',
+            '    {"name":"Main Thread","ph":"M","pid":1,"tid":0,"ts":500,"dur":100,"args":{"name":"Main Thread"}},\n',
+        ]
+        assert thread._get_event_groups(events) == []  # pyright: ignore[reportPrivateUsage]
+
     def test_given_event_without_ts_when_groups_built_expect_event_skipped(self) -> None:
         thread = Thread.__new__(Thread)
         events = [

@@ -20,15 +20,11 @@ class Profile:
         if not _events:
             raise Exception(f"Profile file {file} contained no readable events")
 
+        # Metadata found within the first line of the bazel profile
         self.build_id, self.build_start_time = self._extract_profile_metadata(_events)
-        """
-        Metadata found within the first line of the bazel profile
-        """
 
+        # A list of threads found within the profile. Each thread contains a list of actions.
         self.threads: list[Thread] = self._organise_events_into_threads(_events)
-        """
-        A list of threads found within the profile. Each thread contains a list of actions.
-        """
 
     def get_actions(self, filter_type: ActionFilterType) -> list[Action]:
         _logger.debug(f"Applying filter to the actions: {filter_type}...")
@@ -57,10 +53,11 @@ class Profile:
         # We just need to close the list and then load it as JSON and extract the data.
         profile_metadata = json.loads(f"{profile_data[0]}]}}")
         build_id = profile_metadata.get("otherData").get("build_id")
-        # Note: %fZ is not correctly detected in < Python 3.11 so we'll remove the last 4 chars
-        build_start_time = datetime.datetime.strptime(
-            profile_metadata.get("otherData").get("date")[:-4], "%Y-%m-%dT%H:%M:%S.%f"
-        )
+        # Parse the full timestamp value, including fractional seconds and the trailing UTC marker.
+        # fromisoformat() handles the Z suffix and sub-second precision of any length (Python 3.11+).
+        build_start_time = datetime.datetime.fromisoformat(
+            profile_metadata.get("otherData").get("date")
+        ).replace(tzinfo=None)
         return build_id, build_start_time
 
     def _organise_events_into_threads(self, events: list[str]) -> list[Thread]:
