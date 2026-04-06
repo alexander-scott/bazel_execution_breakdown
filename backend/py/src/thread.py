@@ -32,22 +32,29 @@ class Thread:
         match = PROFILE_TS_REGEX(event)
         return float(match.group(1)) if match else 0
 
-    def _get_event_groups(self, thread_events: list[str]) -> list[list[str]]:
-        event_groups: list[list[str]] = []
-
-        current_event_group: list[str] = []
-        current_group_end_time = None
-        for index, event in enumerate(sorted(thread_events, key=self._extract_timestamp)):
-            if index == 0 and (
+    def _is_metadata_thread(self, events: list[str]) -> bool:
+        """Return True if any event in the list is a metadata-thread marker."""
+        for event in events:
+            if (
                 PROFILE_MAIN_THREAD_REGEX(event)
                 or PROFILE_CRITICAL_PATH_REGEX(event)
                 or PROFILE_RESOURCES_REGEX(event)
                 or PROFILE_GC_REGEX(event)
                 or PROFILE_TREE_DELETER(event)
             ):
-                _logger.debug(f"Skipping thread because it's a metadata thread: {event}")
-                return []
+                return True
+        return False
 
+    def _get_event_groups(self, thread_events: list[str]) -> list[list[str]]:
+        if self._is_metadata_thread(thread_events):
+            _logger.debug("Skipping thread because it's a metadata thread")
+            return []
+
+        event_groups: list[list[str]] = []
+
+        current_event_group: list[str] = []
+        current_group_end_time = None
+        for event in sorted(thread_events, key=self._extract_timestamp):
             ts = PROFILE_TS_REGEX(event)
             dur = PROFILE_DUR_REGEX(event)
             if not (ts and dur):
