@@ -1,5 +1,5 @@
 module(
-    name = "bazel-execution-breakdown",
+    name = "bazel_execution_breakdown",
     version = "0.1",
 )
 
@@ -14,7 +14,7 @@ python.toolchain(
 uv = use_extension(
     "@rules_python//python/uv:uv.bzl",
     "uv",
-    # Use `dev_dependency` so that the toolchains are not defined pulled when your
+    # Use `dev_dependency` so that the toolchains are not pulled in when your
     # module is used elsewhere.
     dev_dependency = True,
 )

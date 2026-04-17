@@ -22,7 +22,20 @@ target-version = "py314"
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
 # McCabe complexity (`C901`) by default.
 # View all available rules here https://docs.astral.sh/ruff/rules/
-select = ["E4", "E7", "E9", "F", "I", "RUF", "FURB", "PL", "PERF", "N", "ANN", "LOG"]
+select = [
+    "ANN",
+    "E4",
+    "E7",
+    "E9",
+    "F",
+    "FURB",
+    "I",
+    "LOG",
+    "N",
+    "PERF",
+    "PL",
+    "RUF",
+]
 ignore = []
 
 # Allow fix for all enabled rules (when `--fix`) is provided.

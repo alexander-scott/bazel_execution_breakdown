@@ -6,12 +6,7 @@ py_binary(
     imports = ["."],
     visibility = ["//backend/py:__subpackages__"],
     deps = [
-        "//backend/py/src:action",
-        "//backend/py/src:action_filter",
-        "//backend/py/src:profile",
-        "//backend/py/src:profile_event_classifier",
-        "//backend/py/src:profile_loader",
-        "//backend/py/src:thread",
+        "//backend/py/src:lib",
         "@pip//typer",
     ],
 )
