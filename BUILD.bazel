@@ -9,6 +9,9 @@ lock(
 lock(
     name = "requirements_dev",
     srcs = ["pyproject.toml"],
-    args = ["--extra", "dev"],
     out = "requirements_dev.txt",
+    args = [
+        "--extra",
+        "dev",
+    ],
 )
