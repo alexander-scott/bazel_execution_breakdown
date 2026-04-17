@@ -5,3 +5,10 @@ lock(
     srcs = ["pyproject.toml"],
     out = "requirements.txt",
 )
+
+lock(
+    name = "requirements_dev",
+    srcs = ["pyproject.toml"],
+    args = ["--extra", "dev"],
+    out = "requirements_dev.txt",
+)

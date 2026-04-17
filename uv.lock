@@ -16,14 +16,22 @@ name = "bazel-execution-breakdown"
 version = "0.0.1"
 source = { virtual = "." }
 dependencies = [
-    { name = "pytest" },
     { name = "typer" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "pytest" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "pytest", specifier = "==8.0.0" },
     { name = "typer", specifier = "==0.24.1" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = "==8.0.0" },
 ]
 
 [[package]]

@@ -27,4 +27,10 @@ pip.parse(
     requirements_darwin = "//:requirements.txt",
     requirements_linux = "//:requirements.txt",
 )
-use_repo(pip, "pip")
+pip.parse(
+    hub_name = "pip_dev",
+    python_version = "3.14",
+    requirements_darwin = "//:requirements_dev.txt",
+    requirements_linux = "//:requirements_dev.txt",
+)
+use_repo(pip, "pip", "pip_dev")
