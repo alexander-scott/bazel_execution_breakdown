@@ -4,7 +4,7 @@ py_test(
     name = "test_profile",
     srcs = ["test_profile.py"],
     deps = [
-        "//backend/py:main",
+        "//backend/py/src:lib",
         "//backend/py/tests:conftest",
         "@pip//pytest",
     ],
