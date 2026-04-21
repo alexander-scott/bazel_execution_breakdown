@@ -23,12 +23,20 @@ $ bazel build --profile=profile.gz --noslim_profile --experimental_profile_inclu
 
 ### Pre-requisites
 
+#### UV
+
 First, ensure you have [UV](https://docs.astral.sh/uv/getting-started/installation/) installed on your local machine. Then, set up a virtual environment and install the dependencies from `pyproject.toml` file with:
 
 ```bash
 uv sync
 source .venv/bin/activate
 ```
+
+#### Bazel
+
+You can install [`Bazelisk`](https://github.com/bazelbuild/bazelisk) on your machine in order to run the bazel commands in the repo.
+
+### Linting
 
 You can also run the pre-commit linters with:
 
