@@ -1,9 +1,9 @@
 [project]
-name = "bazel-execution-breakdown"
+name = "bazel_execution_breakdown"
 version = "0.0.1"
 description = "Add your description here"
 readme = "README.md"
-requires-python = "==3.14.3"
+requires-python = "==3.14.1"
 dependencies = ["typer==0.24.1", "pytest==8.0.0"]
 
 [tool.pytest.ini_options]

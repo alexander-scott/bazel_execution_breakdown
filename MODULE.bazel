@@ -3,28 +3,43 @@ module(
     version = "0.1",
 )
 
+bazel_dep(name = "aspect_bazel_lib", version = "2.22.5")
+bazel_dep(name = "bazel_features", version = "1.45.0")
+bazel_dep(name = "bazel_skylib", version = "1.9.0")
+bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "rules_python", version = "1.9.0")
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
     configure_coverage_tool = True,
-    python_version = "3.14",
+    python_version = "3.14.1",
 )
 
-uv = use_extension(
-    "@rules_python//python/uv:uv.bzl",
-    "uv",
-    # Use `dev_dependency` so that the toolchains are not pulled in when your
-    # module is used elsewhere.
-    dev_dependency = True,
-)
-uv.configure(version = "0.11.3")
+# rules_pycross
+bazel_dep(name = "rules_pycross", version = "0.8.1")
 
-pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
-pip.parse(
-    hub_name = "pip",
-    python_version = "3.14",
-    requirements_darwin = "//:requirements.txt",
-    requirements_linux = "//:requirements.txt",
+environments = use_extension("@rules_pycross//pycross/extensions:environments.bzl", "environments")
+environments.create_for_python_toolchains(
+    name = "rules_pycross_e2e_environments",
+    platforms = [
+        "aarch64-apple-darwin",
+        "aarch64-unknown-linux-gnu",
+        "x86_64-unknown-linux-gnu",
+    ],
 )
-use_repo(pip, "pip")
+use_repo(environments, "rules_pycross_e2e_environments")
+
+# Use the lock_import extension to import external lock files.
+lock_import = use_extension("@rules_pycross//pycross/extensions:lock_import.bzl", "lock_import")
+
+# lock_repo with uv and some package overrides
+lock_import.import_uv(
+    lock_file = "//:uv.lock",
+    project_file = "//:pyproject.toml",
+    repo = "uv",
+    target_environments = ["@rules_pycross_e2e_environments//:environments"],
+)
+
+# The actual repos are loaded from the lock_repos extension.
+lock_repos = use_extension("@rules_pycross//pycross/extensions:lock_repos.bzl", "lock_repos")
+use_repo(lock_repos, "uv")
