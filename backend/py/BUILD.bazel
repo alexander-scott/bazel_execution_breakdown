@@ -7,6 +7,6 @@ py_binary(
     visibility = ["//backend/py:__subpackages__"],
     deps = [
         "//backend/py/src:lib",
-        "@pip//typer",
+        "@uv//:typer",
     ],
 )

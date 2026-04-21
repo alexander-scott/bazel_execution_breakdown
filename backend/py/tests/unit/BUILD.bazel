@@ -6,7 +6,7 @@ py_test(
     deps = [
         "//backend/py/src:lib",
         "//backend/py/tests:conftest",
-        "@pip//pytest",
+        "@uv//:pytest",
     ],
 )
 
@@ -16,7 +16,7 @@ py_test(
     deps = [
         "//backend/py/src:lib",
         "//backend/py/tests:conftest",
-        "@pip//pytest",
+        "@uv//:pytest",
     ],
 )
 
@@ -26,6 +26,6 @@ py_test(
     deps = [
         "//backend/py/src:lib",
         "//backend/py/tests:conftest",
-        "@pip//pytest",
+        "@uv//:pytest",
     ],
 )
