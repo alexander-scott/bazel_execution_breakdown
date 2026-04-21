@@ -1,10 +1,9 @@
 load("@rules_python//python:py_binary.bzl", "py_binary")
 
 py_binary(
-    name = "main",
-    srcs = ["main.py"],
+    name = "cli",
+    srcs = ["cli.py"],
     imports = ["."],
-    visibility = ["//backend/py:__subpackages__"],
     deps = [
         "//backend/py/src:lib",
         "@uv//:typer",
