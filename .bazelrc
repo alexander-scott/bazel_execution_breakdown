@@ -1,6 +1,7 @@
 common --announce_rc
 
 build --nobuild_runfile_links
+build --nobuild_tests_only
 
 test --test_output=errors
 test --verbose_failures
