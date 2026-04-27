@@ -1,5 +1,10 @@
 common --announce_rc
 
+# To fix protobuf & grpc build errors on mac
+build --copt="-mmacosx-version-min=10.13"
+build --linkopt="-mmacosx-version-min=10.13"
+build --features=-module_maps
+
 build --nobuild_runfile_links
 build --nobuild_tests_only
 
