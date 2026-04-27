@@ -4,11 +4,12 @@ module(
 )
 
 ########################################################
-### Core deps ###
+### Transitive pinned ###
 bazel_dep(name = "aspect_bazel_lib", version = "2.22.5")
 bazel_dep(name = "bazel_features", version = "1.45.0")
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 bazel_dep(name = "platforms", version = "1.0.0")
+bazel_dep(name = "rules_android", version = "0.7.2")
 ########################################################
 
 ########################################################
