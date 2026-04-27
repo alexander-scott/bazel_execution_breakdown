@@ -1,4 +1,4 @@
-load("@rules_proto_grpc_python//:defs.bzl", "python_proto_library")
+load("@rules_proto_grpc_python//:defs.bzl", "python_grpc_library", "python_proto_library")
 
 # https://github.com/bazelbuild/remote-apis/blob/v2.12.0/build/bazel/remote/execution/v2/remote_execution.proto
 python_proto_library(
@@ -6,7 +6,13 @@ python_proto_library(
     protos = ["@bazel_remote_apis//build/bazel/remote/execution/v2:remote_execution_proto"],
 )
 
-# https://github.com/bazelbuild/bazel/blob/9.0.2/src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto
+python_grpc_library(
+    name = "remote_execution_grpc",
+    protos = ["@bazel_remote_apis//build/bazel/remote/execution/v2:remote_execution_proto"],
+    deps = [":remote_execution_proto"],
+)
+
+# https://github.com/bazelbuild/bazel/blob/8.6.0/src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto
 python_proto_library(
     name = "build_event_stream_proto",
     protos = ["@bazel_bes//:build_event_stream_proto"],
