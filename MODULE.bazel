@@ -84,13 +84,13 @@ build_event_stream_repo.settings(
     name = "bazel_bes",
     revision = "9.0.2",
     sha256s = {
+        "action_cache.proto": "9eeff48f357ec2dc07617a0a326fdd89ef6108d6b93bc9eea5592ecb7ff849b3",
         "build_event_stream.proto": "f15a652c9804e09fabf3a77919ecaf314750e547daabc7572fd0fad058174316",
         "command_line.proto": "bad4d1fc43be92cd7a70ff3414d4e4c7c3f1843ed57eca75db84b4ae30c7fa33",
+        "failure_details.proto": "143557d95de1f8603540bd3ddf34dfa8d541baee95ef56214a52dd354ad90e0e",
         "invocation_policy.proto": "bed0008e69fbc537bc912753bbf23895d9cffd4a1c97adbf41f29082274f523b",
         "option_filters.proto": "c8e92a8a5be45484f705e4abe4f2a3d4b5c77c99477b5ce2286add87ed64f2cc",
-        "failure_details.proto": "143557d95de1f8603540bd3ddf34dfa8d541baee95ef56214a52dd354ad90e0e",
         "package_load_metrics.proto": "679135cd318b1e13b920ded15094dc80a3483bb0c34514daeaa098b5fe334375",
-        "action_cache.proto": "9eeff48f357ec2dc07617a0a326fdd89ef6108d6b93bc9eea5592ecb7ff849b3",
         "strategy_policy.proto": "0068e23223be68f55ddc36d63916efae9b8f64f1cbae5b02bac6059b5b032d4d",
     },
 )
