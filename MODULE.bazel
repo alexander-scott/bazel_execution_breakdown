@@ -3,10 +3,16 @@ module(
     version = "0.1",
 )
 
+########################################################
+### Core deps ###
 bazel_dep(name = "aspect_bazel_lib", version = "2.22.5")
 bazel_dep(name = "bazel_features", version = "1.45.0")
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 bazel_dep(name = "platforms", version = "1.0.0")
+########################################################
+
+########################################################
+### Python toolchain ###
 bazel_dep(name = "rules_python", version = "1.9.0")
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
@@ -14,9 +20,21 @@ python.toolchain(
     configure_coverage_tool = True,
     python_version = "3.14.1",
 )
+use_repo(python)
+########################################################
 
-# rules_pycross
+########################################################
+### rules_pycross ###
 bazel_dep(name = "rules_pycross", version = "0.8.1")
+
+# Override pycross defaults so that only Python 3.14.1 is processed when
+# setting up pycross toolchains. Without this, rules_pycross reads ALL
+# registered Python versions (including 3.8 from grpc's transitive deps),
+# and rules_python 1.9.0 dropped 3.8 from TOOL_VERSIONS/MINOR_MAPPING.
+pycross = use_extension("@rules_pycross//pycross/extensions:pycross.bzl", "pycross")
+pycross.configure_environments(
+    python_versions = ["3.14.1"],
+)
 
 environments = use_extension("@rules_pycross//pycross/extensions:environments.bzl", "environments")
 environments.create_for_python_toolchains(
@@ -43,3 +61,19 @@ lock_import.import_uv(
 # The actual repos are loaded from the lock_repos extension.
 lock_repos = use_extension("@rules_pycross//pycross/extensions:lock_repos.bzl", "lock_repos")
 use_repo(lock_repos, "uv")
+########################################################
+
+########################################################
+### Protobuf ###
+bazel_dep(name = "rules_proto_grpc_python", version = "5.8.0")
+bazel_dep(
+    name = "bazel_remote_apis",
+    repo_name = "bazel_remote_apis",
+)
+archive_override(
+    module_name = "bazel_remote_apis",
+    sha256 = "2679719b77b8c4665592e813118c81ef43bc9e2fa305512771e723a7b1fe896b",
+    strip_prefix = "remote-apis-2.12.0",
+    url = "https://github.com/bazelbuild/remote-apis/archive/refs/tags/v2.12.0.tar.gz",
+)
+########################################################
