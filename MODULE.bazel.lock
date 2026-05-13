@@ -448,8 +448,8 @@
   "moduleExtensions": {
     "//protobuf:bes_repo.bzl%build_event_service_repo": {
       "general": {
-        "bzlTransitiveDigest": "d62yRUriy/JGPpoHzSSrx4BYrE3JQuuEPb8ArA7xozU=",
-        "usagesDigest": "JOLcf3mhw7jarnLa60KoY+eD4sK8Lu+0iZqp9FrA3q8=",
+        "bzlTransitiveDigest": "4x+BePaybbX+YfC+Y0frwLe2n11vseKllFQMWqNk3Gg=",
+        "usagesDigest": "3sA5oRAQLA33ZCMv8gu71fJ3gM2XPag3xT9VqE8uVso=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -457,7 +457,7 @@
           "bazel_bes": {
             "repoRuleId": "@@//protobuf:bes_repo.bzl%bes_repo_rule",
             "attributes": {
-              "revision": "8.6.0",
+              "revision": "8.7.0",
               "sha256s": {
                 "action_cache.proto": "dcc41240e4bed96a39359c57a1354f603b5b6f209d2b9e4be4fe4a19b2e3828a",
                 "build_event_stream.proto": "7287f1259508390482d4099c2cbe36400fdd0ca8b6ad030428a35e0a587c38f1",
@@ -498,7 +498,7 @@
     },
     "@@rules_kotlin+//src/main/starlark/core/repositories:bzlmod_setup.bzl%rules_kotlin_extensions": {
       "general": {
-        "bzlTransitiveDigest": "nvW/NrBXlAmiQw99EMGKkLaD2KbNp2mQDlxdfpr+0Ls=",
+        "bzlTransitiveDigest": "03Qju4tW0vE+0RBuZGuV2A4Hx6AiSkdNahYvworx2aM=",
         "usagesDigest": "QI2z8ZUR+mqtbwsf2fLqYdJAkPOHdOV+tF2yVAUgRzw=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
