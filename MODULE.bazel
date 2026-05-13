@@ -84,7 +84,7 @@ archive_override(
 build_event_stream_repo = use_extension("//protobuf:bes_repo.bzl", "build_event_service_repo")
 build_event_stream_repo.settings(
     name = "bazel_bes",
-    revision = "8.6.0",
+    revision = "8.7.0",
     sha256s = {
         "action_cache.proto": "dcc41240e4bed96a39359c57a1354f603b5b6f209d2b9e4be4fe4a19b2e3828a",
         "build_event_stream.proto": "7287f1259508390482d4099c2cbe36400fdd0ca8b6ad030428a35e0a587c38f1",
