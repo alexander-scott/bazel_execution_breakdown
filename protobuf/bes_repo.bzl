@@ -50,12 +50,21 @@ def _bes_repo_rule(repository_ctx):
         )
         filename = paths.basename(path)
         proto_srcs.append("\"%s\"" % path)
-        attrs["sha256s"][filename] = repository_ctx.download(
-            url,
-            output = path,
-            canonical_id = url,
-            sha256 = repository_ctx.attr.sha256s.get(filename, ""),
-        ).sha256
+        sha256 = repository_ctx.attr.sha256s.get(filename)
+        if sha256:
+            download_result = repository_ctx.download(
+                url,
+                output = path,
+                canonical_id = url,
+                sha256 = sha256,
+            )
+        else:
+            download_result = repository_ctx.download(
+                url,
+                output = path,
+                canonical_id = url,
+            )
+        attrs["sha256s"][filename] = download_result.sha256
 
     repository_ctx.file(
         "BUILD.bazel",
@@ -63,8 +72,6 @@ def _bes_repo_rule(repository_ctx):
             filenames = ",\n        ".join(proto_srcs),
         ),
     )
-
-    return attrs
 
 bes_repo_rule = repository_rule(
     implementation = _bes_repo_rule,
