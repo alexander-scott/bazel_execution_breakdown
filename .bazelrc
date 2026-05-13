@@ -11,3 +11,6 @@ build --nobuild_tests_only
 
 test --test_output=errors
 test --verbose_failures
+
+# Bazel 9 flips
+build --experimental_platform_in_output_dir=auto # (now defaults to Auto; #27575)
