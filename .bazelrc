@@ -4,7 +4,7 @@ common --enable_platform_specific_config
 # To fix protobuf & grpc build errors on mac
 build:macos --copt="-mmacosx-version-min=10.13"
 build:macos --linkopt="-mmacosx-version-min=10.13"
-build --features=-module_maps
+build:macos --features=-module_maps
 
 build --nobuild_runfile_links
 build --nobuild_tests_only
