@@ -12,7 +12,7 @@ python_grpc_library(
     deps = [":remote_execution_proto"],
 )
 
-# https://github.com/bazelbuild/bazel/blob/8.7.0/src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto
+# https://github.com/bazelbuild/bazel/blob/9.1.0/src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto
 python_proto_library(
     name = "build_event_stream_proto",
     protos = ["@bazel_bes//:build_event_stream_proto"],
