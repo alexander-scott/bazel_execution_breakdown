@@ -5,10 +5,10 @@ index c4c98fd644..695a8f4b79 100644
 @@ -13,6 +13,7 @@
  # limitations under the License.
  """Custom rules for gRPC Python"""
- 
++
 +load("@rules_cc//cc:defs.bzl", "cc_binary")
  load("@rules_python//python:defs.bzl", "py_library")
- 
+
  # Adapted with modifications from
 @@ -71,7 +72,7 @@ def pyx_library(name, deps = [], py_deps = [], srcs = [], **kwargs):
      for src in pyx_srcs:
