@@ -9,3 +9,19 @@ py_binary(
         "@uv//:typer",
     ],
 )
+
+py_binary(
+    name = "server",
+    srcs = ["server.py"],
+    imports = ["."],
+    deps = [
+        "//backend/py/src:lib",
+        "//protobuf:build_event_stream_grpc",
+        "//protobuf:build_event_stream_proto",
+        "//protobuf:publish_build_event_grpc",
+        "//protobuf:publish_build_event_proto",
+        "@uv//:googleapis-common-protos",
+        "@uv//:grpcio",
+        "@uv//:protobuf",
+    ],
+)
