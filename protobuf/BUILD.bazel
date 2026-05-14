@@ -1,5 +1,7 @@
 load("@rules_proto_grpc_python//:defs.bzl", "python_grpc_library", "python_proto_library")
 
+package(default_visibility = ["//visibility:public"])
+
 # https://github.com/bazelbuild/remote-apis/blob/v2.12.0/build/bazel/remote/execution/v2/remote_execution.proto
 python_proto_library(
     name = "remote_execution_proto",
@@ -12,8 +14,26 @@ python_grpc_library(
     deps = [":remote_execution_proto"],
 )
 
+# https://github.com/googleapis/googleapis/blob/20ac242a/google/devtools/build/v1/publish_build_event.proto
+python_proto_library(
+    name = "publish_build_event_proto",
+    protos = ["@googleapis//google/devtools/build/v1:build_proto"],
+)
+
+python_grpc_library(
+    name = "publish_build_event_grpc",
+    protos = ["@googleapis//google/devtools/build/v1:build_proto"],
+    deps = [":publish_build_event_proto"],
+)
+
 # https://github.com/bazelbuild/bazel/blob/9.1.0/src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto
 python_proto_library(
     name = "build_event_stream_proto",
     protos = ["@bazel_bes//:build_event_stream_proto"],
+)
+
+python_grpc_library(
+    name = "build_event_stream_grpc",
+    protos = ["@bazel_bes//:build_event_stream_proto"],
+    deps = [":build_event_stream_proto"],
 )
