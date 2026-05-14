@@ -93,6 +93,8 @@ archive_override(
     url = "https://github.com/bazelbuild/remote-apis/archive/refs/tags/v2.12.0.tar.gz",
 )
 
+bazel_dep(name = "googleapis", version = "0.0.0-20260422-20ac242a")
+
 build_event_stream_repo = use_extension("//protobuf:bes_repo.bzl", "build_event_service_repo")
 build_event_stream_repo.settings(
     name = "bazel_bes",
