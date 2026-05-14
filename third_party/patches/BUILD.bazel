@@ -1,1 +1,4 @@
-exports_files(["grpc-cython-library-bazel9.patch"])
+exports_files([
+    "grpc-cython-library-bazel9.patch",
+    "re2-build-bazel9.patch",
+])
