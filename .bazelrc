@@ -12,11 +12,5 @@ build --nobuild_tests_only
 test --test_output=errors
 test --verbose_failures
 
-# Bazel 9 flips
-build --incompatible_compact_repo_mapping_manifest # (#26262)
-build --incompatible_strict_action_env # (#26587)
-build --incompatible_disable_autoloads_in_main_repo # (#25755)
-build --incompatible_repo_env_ignores_action_env # (#26222)
-build --incompatible_use_new_cgroup_implementation # (#28244)
-build --incompatible_filegroup_runfiles_for_data # (#26330)
-build --incompatible_enable_proto_toolchain_resolution # (#28182)
+# Migration flags
+build --incompatible_autoload_externally=py_test # Should be set to empty string. Waiting for googleapis
