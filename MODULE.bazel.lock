@@ -452,25 +452,22 @@
   "moduleExtensions": {
     "//protobuf:bes_repo.bzl%build_event_service_repo": {
       "general": {
-        "bzlTransitiveDigest": "4x+BePaybbX+YfC+Y0frwLe2n11vseKllFQMWqNk3Gg=",
-        "usagesDigest": "1HboLKZkZDn+7WawQYJsJ2XuGTzcBYd8e192w2lYDQg=",
-        "recordedInputs": [
-          "REPO_MAPPING:,bazel_skylib bazel_skylib+"
-        ],
+        "bzlTransitiveDigest": "NYSGFymMOS8QDPt2SwJi1x0YJ6p42WpB2Hk6KEX16Yo=",
+        "usagesDigest": "EcrnM/ZbcLOt2pfTb0LZ9NuW9O50evZjr9Qf6Hbfxbc=",
+        "recordedInputs": [],
         "generatedRepoSpecs": {
           "bazel_bes": {
             "repoRuleId": "@@//protobuf:bes_repo.bzl%bes_repo_rule",
             "attributes": {
-              "revision": "9.1.0",
-              "sha256s": {
-                "action_cache.proto": "9eeff48f357ec2dc07617a0a326fdd89ef6108d6b93bc9eea5592ecb7ff849b3",
-                "build_event_stream.proto": "f15a652c9804e09fabf3a77919ecaf314750e547daabc7572fd0fad058174316",
-                "command_line.proto": "bad4d1fc43be92cd7a70ff3414d4e4c7c3f1843ed57eca75db84b4ae30c7fa33",
-                "failure_details.proto": "143557d95de1f8603540bd3ddf34dfa8d541baee95ef56214a52dd354ad90e0e",
-                "invocation_policy.proto": "bed0008e69fbc537bc912753bbf23895d9cffd4a1c97adbf41f29082274f523b",
-                "option_filters.proto": "c8e92a8a5be45484f705e4abe4f2a3d4b5c77c99477b5ce2286add87ed64f2cc",
-                "package_load_metrics.proto": "679135cd318b1e13b920ded15094dc80a3483bb0c34514daeaa098b5fe334375",
-                "strategy_policy.proto": "0068e23223be68f55ddc36d63916efae9b8f64f1cbae5b02bac6059b5b032d4d"
+              "files": {
+                "src/main/protobuf/action_cache.proto": "9eeff48f357ec2dc07617a0a326fdd89ef6108d6b93bc9eea5592ecb7ff849b3",
+                "src/main/java/com/google/devtools/build/lib/buildeventstream/proto/build_event_stream.proto": "f15a652c9804e09fabf3a77919ecaf314750e547daabc7572fd0fad058174316",
+                "src/main/protobuf/command_line.proto": "bad4d1fc43be92cd7a70ff3414d4e4c7c3f1843ed57eca75db84b4ae30c7fa33",
+                "src/main/protobuf/failure_details.proto": "143557d95de1f8603540bd3ddf34dfa8d541baee95ef56214a52dd354ad90e0e",
+                "src/main/protobuf/invocation_policy.proto": "bed0008e69fbc537bc912753bbf23895d9cffd4a1c97adbf41f29082274f523b",
+                "src/main/protobuf/option_filters.proto": "c8e92a8a5be45484f705e4abe4f2a3d4b5c77c99477b5ce2286add87ed64f2cc",
+                "src/main/java/com/google/devtools/build/lib/packages/metrics/package_load_metrics.proto": "679135cd318b1e13b920ded15094dc80a3483bb0c34514daeaa098b5fe334375",
+                "src/main/protobuf/strategy_policy.proto": "0068e23223be68f55ddc36d63916efae9b8f64f1cbae5b02bac6059b5b032d4d"
               }
             }
           }
