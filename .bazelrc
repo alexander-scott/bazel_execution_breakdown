@@ -1,6 +1,9 @@
 common --announce_rc
 common --enable_platform_specific_config
 
+build --repo_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+build --linkopt=-no-pie
+
 # To fix protobuf & grpc build errors on mac
 build:macos --copt="-mmacosx-version-min=10.13"
 build:macos --linkopt="-mmacosx-version-min=10.13"
