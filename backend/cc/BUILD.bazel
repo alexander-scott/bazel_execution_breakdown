@@ -1,0 +1,18 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "mylib",
+    srcs = ["mylib.cc"],
+    hdrs = ["mylib.h"],
+    implementation_deps = ["@fmt"],
+    visibility = ["//visibility:public"],
+)
+
+cc_test(
+    name = "mylib_test",
+    srcs = ["mylib_test.cc"],
+    deps = [
+        ":mylib",
+        "@googletest//:gtest_main",
+    ],
+)
