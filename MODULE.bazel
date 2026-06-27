@@ -133,4 +133,5 @@ register_toolchains("@llvm//toolchain:all")
 ########################################################
 
 bazel_dep(name = "fmt", version = "12.1.0")
+
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2", dev_dependency = True)
